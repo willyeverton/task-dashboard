@@ -1,6 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-interface Task {
+export interface Task {
   id: string;
   title: string;
   description: string;
@@ -11,7 +11,7 @@ interface Task {
   responsible: string;
 }
 
-interface TaskContextType {
+export interface TaskContextType {
   tasks: Task[];
   addTask: (task: Task) => void;
   removeTask: (taskId: string) => void;
