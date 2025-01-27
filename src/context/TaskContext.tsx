@@ -11,7 +11,7 @@ export interface Task {
   responsible: string;
 }
 
-export interface TaskContextType {
+interface TaskContextType {
   tasks: Task[];
   addTask: (task: Task) => void;
   removeTask: (taskId: string) => void;
