@@ -96,58 +96,78 @@ const TaskList: React.FC = () => {
         </Button>
       </Box>
 
-      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+      <Box sx={{
+        display: 'flex',
+        flexDirection: { xs: 'column', md: 'row' },
+        justifyContent: 'space-between',
+        gap: 2,
+        mb: 2
+      }}>
+        <fieldset style={{
+          border: '1px solid #ddd',
+          borderRadius: '4px',
+        }}>
+          <legend>Filtros</legend>
+          <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+            <FormControl sx={{ minWidth: 120 }}>
+              <InputLabel>Status</InputLabel>
+              <Select
+                value={filterStatus}
+                label="Status"
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <MenuItem value="">Todos</MenuItem>
+                <MenuItem value="Pendente">Pendente</MenuItem>
+                <MenuItem value="Em progresso">Em progresso</MenuItem>
+                <MenuItem value="Concluída">Concluída</MenuItem>
+              </Select>
+            </FormControl>
 
-        <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Status</InputLabel>
-          <Select
-            value={filterStatus}
-            label="Status"
-            onChange={(e) => setFilterStatus(e.target.value)}
+            <FormControl sx={{ minWidth: 120 }}>
+              <InputLabel>Prioridade</InputLabel>
+              <Select
+                value={filterPriority}
+                label="Prioridade"
+                onChange={(e) => setFilterPriority(e.target.value)}
+              >
+                <MenuItem value="">Todas</MenuItem>
+                <MenuItem value="Baixa">Baixa</MenuItem>
+                <MenuItem value="Média">Média</MenuItem>
+                <MenuItem value="Alta">Alta</MenuItem>
+              </Select>
+            </FormControl>
+          </Box>
+        </fieldset>
+
+        <Box sx={{
+          display: 'flex',
+          gap: 2,
+          alignItems: 'flex-start',
+          margin: '10px',
+          padding: '10px',
+        }}>
+          <FormControl sx={{ minWidth: 120 }}>
+            <InputLabel>Ordenar por</InputLabel>
+            <Select
+              value={sortBy}
+              label="Ordenar por"
+              onChange={(e) => setSortBy(e.target.value)}
+            >
+              <MenuItem value="createdAt">Data de Criação</MenuItem>
+              <MenuItem value="dueDate">Data de Vencimento</MenuItem>
+              <MenuItem value="title">Título</MenuItem>
+              <MenuItem value="priority">Prioridade</MenuItem>
+            </Select>
+          </FormControl>
+
+          <Button
+            onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
+            startIcon={sortOrder === 'asc' ? '↑' : '↓'}
           >
-            <MenuItem value="">Todos</MenuItem>
-            <MenuItem value="Pendente">Pendente</MenuItem>
-            <MenuItem value="Em progresso">Em progresso</MenuItem>
-            <MenuItem value="Concluída">Concluída</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Prioridade</InputLabel>
-          <Select
-            value={filterPriority}
-            label="Prioridade"
-            onChange={(e) => setFilterPriority(e.target.value)}
-          >
-            <MenuItem value="">Todas</MenuItem>
-            <MenuItem value="Baixa">Baixa</MenuItem>
-            <MenuItem value="Média">Média</MenuItem>
-            <MenuItem value="Alta">Alta</MenuItem>
-          </Select>
-        </FormControl>
-
-        <FormControl sx={{ minWidth: 120 }}>
-          <InputLabel>Ordenar por</InputLabel>
-          <Select
-            value={sortBy}
-            label="Ordenar por"
-            onChange={(e) => setSortBy(e.target.value)}
-          >
-            <MenuItem value="createdAt">Data de Criação</MenuItem>
-            <MenuItem value="dueDate">Data de Vencimento</MenuItem>
-            <MenuItem value="title">Título</MenuItem>
-            <MenuItem value="priority">Prioridade</MenuItem>
-          </Select>
-        </FormControl>
-
-        <Button
-          onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
-          startIcon={sortOrder === 'asc' ? '↑' : '↓'}
-        >
-          {sortOrder === 'asc' ? 'Crescente' : 'Decrescente'}
-        </Button>
-
+          </Button>
+        </Box>
       </Box>
+
 
       <Grid container spacing={2}>
         {filteredTasks.map((task) => (
