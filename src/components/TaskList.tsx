@@ -48,6 +48,39 @@ const TaskList: React.FC = () => {
     setOpenDeleteDialog(false);
   };
 
+
+  const [sortBy, setSortBy] = useState<string>('createdAt');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
+
+  const handleSort = (tasks: Task[]) => {
+    return [...tasks].sort((a, b) => {
+      switch (sortBy) {
+        case 'title':
+          return sortOrder === 'asc'
+            ? a.title.localeCompare(b.title)
+            : b.title.localeCompare(a.title);
+        case 'priority':
+          const priorityOrder = { 'Alta': 3, 'Média': 2, 'Baixa': 1 };
+          return sortOrder === 'asc'
+            ? priorityOrder[a.priority] - priorityOrder[b.priority]
+            : priorityOrder[b.priority] - priorityOrder[a.priority];
+        case 'dueDate':
+          return sortOrder === 'asc'
+            ? new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+            : new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
+        default: // createdAt
+          return sortOrder === 'asc'
+            ? a.createdAt.getTime() - b.createdAt.getTime()
+            : b.createdAt.getTime() - a.createdAt.getTime();
+      }
+    });
+  };
+
+  useEffect(() => {
+    const sorted = handleSort(filteredTasks);
+    setFilteredTasks(sorted);
+  }, [sortBy, sortOrder]);
+
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -64,6 +97,7 @@ const TaskList: React.FC = () => {
       </Box>
 
       <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+
         <FormControl sx={{ minWidth: 120 }}>
           <InputLabel>Status</InputLabel>
           <Select
@@ -91,6 +125,28 @@ const TaskList: React.FC = () => {
             <MenuItem value="Alta">Alta</MenuItem>
           </Select>
         </FormControl>
+
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel>Ordenar por</InputLabel>
+          <Select
+            value={sortBy}
+            label="Ordenar por"
+            onChange={(e) => setSortBy(e.target.value)}
+          >
+            <MenuItem value="createdAt">Data de Criação</MenuItem>
+            <MenuItem value="dueDate">Data de Vencimento</MenuItem>
+            <MenuItem value="title">Título</MenuItem>
+            <MenuItem value="priority">Prioridade</MenuItem>
+          </Select>
+        </FormControl>
+
+        <Button
+          onClick={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
+          startIcon={sortOrder === 'asc' ? '↑' : '↓'}
+        >
+          {sortOrder === 'asc' ? 'Crescente' : 'Decrescente'}
+        </Button>
+
       </Box>
 
       <Grid container spacing={2}>
