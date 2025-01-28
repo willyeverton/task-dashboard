@@ -1,11 +1,11 @@
 import React from 'react';
 import { Box, Dialog, Grid } from '@mui/material';
-import TaskForm from './TaskForm';
-import { TaskHeader } from './TaskHeader';
-import { TaskFilters } from './TaskFilters';
-import { TaskSorting } from './TaskSorting';
-import { TaskCard } from './TaskCard';
-import { DeleteConfirmDialog } from './DeleteConfirmDialog';
+import TaskForm from '../TaskForm';
+import { TaskHeader } from '../../TaskHeader';
+import { TaskFilters } from '../../TaskFilters';
+import { TaskSorting } from '../../TaskSorting';
+import { TaskCard } from '../TaskCard';
+import { DeleteConfirmDialog } from '../../DeleteConfirmDialog';
 import { useTaskListManager } from 'hooks/useTaskListManager';
 
 const TaskList: React.FC = () => {

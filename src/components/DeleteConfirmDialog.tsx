@@ -16,10 +16,10 @@ export const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
         Deseja realmente excluir esta tarefa?
       </Typography>
       <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
-        <Button onClick={onClose}>Cancelar</Button>
         <Button variant="contained" color="error" onClick={onConfirm}>
           Excluir
         </Button>
+        <Button onClick={onClose}>Cancelar</Button>
       </Box>
     </Box>
   </Dialog>
