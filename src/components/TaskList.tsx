@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTaskContext } from '../context/TaskContext';
-import { Button, Card, Typography, Box, Dialog } from '@mui/material';
+import { Button, Card, Typography, Box, Dialog, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
 import { Task } from '../context/TaskContext';
 import TaskForm from './TaskForm';
 
@@ -9,15 +9,21 @@ const TaskList: React.FC = () => {
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
+  const [filterStatus, setFilterStatus] = useState<string>('');
+  const [filterPriority, setFilterPriority] = useState<string>('');
 
   useEffect(() => {
     setFilteredTasks(tasks);
   }, [tasks]);
 
-  const handleFilter = (status: string, priority: string) => {
-    const filtered = filterTasks(status, priority);
+  const handleFilter = () => {
+    const filtered = filterTasks(filterStatus, filterPriority);
     setFilteredTasks(filtered);
   };
+
+  useEffect(() => {
+    handleFilter();
+  }, [filterStatus, filterPriority]);
 
   const handleEdit = (task: Task) => {
     setEditingTask(task);
@@ -44,7 +50,36 @@ const TaskList: React.FC = () => {
         </Button>
       </Box>
 
-      <Button onClick={() => handleFilter('Pendente', 'Alta')}>Filtrar</Button>
+      <Box sx={{ display: 'flex', gap: 2, mb: 2 }}>
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel>Status</InputLabel>
+          <Select
+            value={filterStatus}
+            label="Status"
+            onChange={(e) => setFilterStatus(e.target.value)}
+          >
+            <MenuItem value="">Todos</MenuItem>
+            <MenuItem value="Pendente">Pendente</MenuItem>
+            <MenuItem value="Em progresso">Em progresso</MenuItem>
+            <MenuItem value="Concluída">Concluída</MenuItem>
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ minWidth: 120 }}>
+          <InputLabel>Prioridade</InputLabel>
+          <Select
+            value={filterPriority}
+            label="Prioridade"
+            onChange={(e) => setFilterPriority(e.target.value)}
+          >
+            <MenuItem value="">Todas</MenuItem>
+            <MenuItem value="Baixa">Baixa</MenuItem>
+            <MenuItem value="Média">Média</MenuItem>
+            <MenuItem value="Alta">Alta</MenuItem>
+          </Select>
+        </FormControl>
+      </Box>
+
       {filteredTasks.map((task) => (
         <Card key={task.id} sx={{ marginBottom: 2 }}>
           <Box padding={2}>
