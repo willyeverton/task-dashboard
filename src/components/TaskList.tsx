@@ -8,83 +8,30 @@ import { TaskFilters } from './TaskFilters';
 import { TaskSorting } from './TaskSorting';
 import { TaskCard } from './TaskCard';
 import { DeleteConfirmDialog } from './DeleteConfirmDialog';
+import { useTaskListManager } from 'hooks/useTaskListManager';
 
 const TaskList: React.FC = () => {
-  const { tasks, removeTask, filterTasks } = useTaskContext();
-  const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
-  const [editingTask, setEditingTask] = useState<Task | null>(null);
-  const [openDialog, setOpenDialog] = useState(false);
-  const [filterStatus, setFilterStatus] = useState<string>('');
-  const [filterPriority, setFilterPriority] = useState<string>('');
 
-  useEffect(() => {
-    setFilteredTasks(tasks);
-  }, [tasks]);
-
-  const handleFilter = () => {
-    const filtered = filterTasks(filterStatus, filterPriority);
-    setFilteredTasks(filtered);
-  };
-
-  useEffect(() => {
-    handleFilter();
-  }, [filterStatus, filterPriority]);
-
-  const handleEdit = (task: Task) => {
-    setEditingTask(task);
-    setOpenDialog(true);
-  };
-
-  const handleAddNew = () => {
-    setEditingTask(null);
-    setOpenDialog(true);
-  };
-
-  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
-  const [taskToDelete, setTaskToDelete] = useState<string>('');
-
-  const handleDeleteClick = (taskId: string) => {
-    setTaskToDelete(taskId);
-    setOpenDeleteDialog(true);
-  };
-
-  const handleConfirmDelete = () => {
-    removeTask(taskToDelete);
-    setOpenDeleteDialog(false);
-  };
-
-
-  const [sortBy, setSortBy] = useState<string>('createdAt');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-
-  const handleSort = (tasks: Task[]) => {
-    return [...tasks].sort((a, b) => {
-      switch (sortBy) {
-        case 'title':
-          return sortOrder === 'asc'
-            ? a.title.localeCompare(b.title)
-            : b.title.localeCompare(a.title);
-        case 'priority':
-          const priorityOrder = { 'Alta': 3, 'Média': 2, 'Baixa': 1 };
-          return sortOrder === 'asc'
-            ? priorityOrder[a.priority] - priorityOrder[b.priority]
-            : priorityOrder[b.priority] - priorityOrder[a.priority];
-        case 'dueDate':
-          return sortOrder === 'asc'
-            ? new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
-            : new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
-        default: // createdAt
-          return sortOrder === 'asc'
-            ? a.createdAt.getTime() - b.createdAt.getTime()
-            : b.createdAt.getTime() - a.createdAt.getTime();
-      }
-    });
-  };
-
-  useEffect(() => {
-    const sorted = handleSort(filteredTasks);
-    setFilteredTasks(sorted);
-  }, [sortBy, sortOrder]);
+  const {
+    filteredTasks,
+    editingTask,
+    openDialog,
+    filterStatus,
+    filterPriority,
+    sortOrder,
+    sortBy,
+    openDeleteDialog,
+    setSortBy,
+    handleAddNew,
+    setFilterStatus,
+    setFilterPriority,
+    setSortOrder,
+    handleDeleteClick,
+    handleConfirmDelete,
+    setOpenDialog,
+    setOpenDeleteDialog,
+    handleEdit
+  } = useTaskListManager();
 
   return (
     <Box>
