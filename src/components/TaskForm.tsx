@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Task, useTaskContext } from '../context/TaskContext';
-import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent, Box } from '@mui/material';
+import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent, Box, Grid } from '@mui/material';
 
 interface TaskFormProps {
   editingTask?: Task | null;
@@ -71,6 +71,8 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
           sx={{ mb: 2 }}
         />
         <TextField
+          multiline
+          rows={4}
           label="Descrição"
           name="description"
           value={task.description}
@@ -114,9 +116,29 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
           fullWidth
           sx={{ mb: 2 }}
         />
-        <Button type="submit" variant="contained" fullWidth>
-          {editingTask ? 'Salvar Alterações' : 'Adicionar Tarefa'}
-        </Button>
+        <Box sx={{
+          display: 'flex',
+          gap: 2,
+          flexWrap: 'wrap',
+          mt: 2
+        }}>
+          <Button
+            type="submit"
+            variant="contained"
+            fullWidth
+            sx={{ flex: 1, minWidth: '200px' }}
+          >
+            {editingTask ? 'Salvar Alterações' : 'Adicionar Tarefa'}
+          </Button>
+          <Button
+            variant="outlined"
+            fullWidth
+            onClick={onClose}
+            sx={{ flex: 1, minWidth: '200px' }}
+          >
+            Cancelar
+          </Button>
+        </Box>
       </form>
     </Box>
   );

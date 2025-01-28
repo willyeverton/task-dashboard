@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useTaskContext } from '../context/TaskContext';
-import { Button, Card, Typography, Box, Dialog, Select, MenuItem, FormControl, InputLabel } from '@mui/material';
+import { Button, Card, Typography, Box, Dialog, Select, MenuItem, FormControl, InputLabel, Grid } from '@mui/material';
 import { Task } from '../context/TaskContext';
 import TaskForm from './TaskForm';
 
@@ -80,21 +80,25 @@ const TaskList: React.FC = () => {
         </FormControl>
       </Box>
 
-      {filteredTasks.map((task) => (
-        <Card key={task.id} sx={{ marginBottom: 2 }}>
-          <Box padding={2}>
-            <Typography variant="h6">{task.title}</Typography>
-            <Typography variant="body2">{task.description}</Typography>
-            <Typography variant="body2">Status: {task.status}</Typography>
-            <Typography variant="body2">Prioridade: {task.priority}</Typography>
-            <Typography variant="body2">Responsável: {task.responsible}</Typography>
-            <Box sx={{ display: 'flex', gap: 1 }}>
-              <Button onClick={() => handleEdit(task)}>Editar</Button>
-              <Button onClick={() => removeTask(task.id)}>Remover</Button>
-            </Box>
-          </Box>
-        </Card>
-      ))}
+      <Grid container spacing={2}>
+        {filteredTasks.map((task) => (
+          <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4} key={task.id}>
+            <Card sx={{ height: '100%' }}>
+              <Box padding={2}>
+                <Typography variant="h6" noWrap>{task.title}</Typography>
+                <Typography variant="body2" sx={{ minHeight: '40px' }}>{task.description}</Typography>
+                <Typography variant="body2">Status: {task.status}</Typography>
+                <Typography variant="body2">Prioridade: {task.priority}</Typography>
+                <Typography variant="body2">Responsável: {task.responsible}</Typography>
+                <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+                  <Button onClick={() => handleEdit(task)}>Editar</Button>
+                  <Button onClick={() => removeTask(task.id)}>Remover</Button>
+                </Box>
+              </Box>
+            </Card>
+          </Grid>
+        ))}
+      </Grid>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <TaskForm editingTask={editingTask} onClose={() => setOpenDialog(false)} />
