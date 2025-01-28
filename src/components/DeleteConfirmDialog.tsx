@@ -1,11 +1,6 @@
 import { Box, Button, Dialog, Typography } from '@mui/material';
 import React from 'react';
-
-interface DeleteConfirmDialogProps {
-  open: boolean;
-  onClose: () => void;
-  onConfirm: () => void;
-}
+import { DeleteConfirmDialogProps } from 'types/task.types';
 
 export const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
   open,

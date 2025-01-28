@@ -1,5 +1,6 @@
-import { Task, useTaskContext } from "context/TaskContext";
+import { useTaskContext } from "context/TaskContext";
 import { useEffect, useState } from "react";
+import { Task } from "types/task.types";
 
 export const useTaskListManager = () => {
   const { tasks, removeTask, filterTasks } = useTaskContext();

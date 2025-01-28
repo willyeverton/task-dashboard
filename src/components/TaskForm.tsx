@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Task, useTaskContext } from '../context/TaskContext';
+import { useTaskContext } from '../context/TaskContext';
 import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent, Box, Grid } from '@mui/material';
-
-interface TaskFormProps {
-  editingTask?: Task | null;
-  onClose?: () => void;
-}
+import { Task, TaskFormProps } from 'types/task.types';
 
 const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
   const { addTask, editTask } = useTaskContext();

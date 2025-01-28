@@ -1,12 +1,6 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
-
-interface TaskFiltersProps {
-  filterStatus: string;
-  filterPriority: string;
-  onStatusChange: (value: string) => void;
-  onPriorityChange: (value: string) => void;
-}
+import { TaskFiltersProps } from 'types/task.types';
 
 export const TaskFilters: React.FC<TaskFiltersProps> = ({
   filterStatus,

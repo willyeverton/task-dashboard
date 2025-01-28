@@ -1,9 +1,6 @@
 import { Box, Button, Typography } from '@mui/material';
 import React from 'react';
-
-interface TaskHeaderProps {
-  onAddNew: () => void;
-}
+import { TaskHeaderProps } from 'types/task.types';
 
 export const TaskHeader: React.FC<TaskHeaderProps> = ({ onAddNew }) => (
   <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>

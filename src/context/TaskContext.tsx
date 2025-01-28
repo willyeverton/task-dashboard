@@ -1,23 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
-
-export interface Task {
-  id: string;
-  title: string;
-  description: string;
-  status: 'Pendente' | 'Em progresso' | 'Concluída';
-  priority: 'Baixa' | 'Média' | 'Alta';
-  createdAt: Date;
-  dueDate: string;
-  responsible: string;
-}
-
-interface TaskContextType {
-  tasks: Task[];
-  addTask: (task: Task) => void;
-  removeTask: (taskId: string) => void;
-  editTask: (task: Task) => void;
-  filterTasks: (status: string, priority: string) => Task[];
-}
+import { Task, TaskContextType } from 'types/task.types';
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 

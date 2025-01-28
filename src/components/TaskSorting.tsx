@@ -1,12 +1,6 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
-
-interface TaskSortingProps {
-  sortBy: string;
-  sortOrder: 'asc' | 'desc';
-  onSortByChange: (value: string) => void;
-  onSortOrderChange: () => void;
-}
+import { TaskSortingProps } from 'types/task.types';
 
 export const TaskSorting: React.FC<TaskSortingProps> = ({
   sortBy,

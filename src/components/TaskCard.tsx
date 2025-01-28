@@ -1,12 +1,6 @@
 import { Box, Button, Card, Grid, Typography } from '@mui/material';
-import { Task } from '../context/TaskContext';
 import React from 'react';
-
-interface TaskCardProps {
-  task: Task;
-  onEdit: (task: Task) => void;
-  onDelete: (taskId: string) => void;
-}
+import { TaskCardProps } from 'types/task.types';
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete }) => (
   <Grid item xs={12} sm={6} md={4} lg={3} xl={2.4}>
