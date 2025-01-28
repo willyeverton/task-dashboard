@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
+    "baseUrl": "src",
+    "jsx": "react",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "*": [
+        "*",
+        "*.tsx",
+        "*.ts"
+      ]
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useTaskContext } from '../context/TaskContext.tsx';
+import { useTaskContext } from '../context/TaskContext';
 import { Button, Card, Typography, Box, Dialog } from '@mui/material';
-import { Task } from '../context/TaskContext.tsx';
-import TaskForm from './TaskForm.tsx';
+import { Task } from '../context/TaskContext';
+import TaskForm from './TaskForm';
 
 const TaskList: React.FC = () => {
   const { tasks, removeTask, filterTasks } = useTaskContext();
@@ -24,11 +24,26 @@ const TaskList: React.FC = () => {
     setOpenDialog(true);
   };
 
+  const handleAddNew = () => {
+    setEditingTask(null);
+    setOpenDialog(true);
+  };
+
   return (
     <Box>
-      <Typography variant="h4" gutterBottom>
-        Lista de Tarefas
-      </Typography>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+        <Typography variant="h4" gutterBottom>
+          Lista de Tarefas
+        </Typography>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={handleAddNew}
+        >
+          Nova Tarefa
+        </Button>
+      </Box>
+
       <Button onClick={() => handleFilter('Pendente', 'Alta')}>Filtrar</Button>
       {filteredTasks.map((task) => (
         <Card key={task.id} sx={{ marginBottom: 2 }}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Task, useTaskContext } from '../context/TaskContext.tsx';
+import { Task, useTaskContext } from '../context/TaskContext';
 import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent, Box } from '@mui/material';
 
 interface TaskFormProps {
@@ -27,7 +27,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
   }, [editingTask]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }> | SelectChangeEvent<string>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }> | SelectChangeEvent<unknown>
   ) => {
     const { name, value } = e.target;
     setTask(prev => ({ ...prev, [name as string]: value }));
