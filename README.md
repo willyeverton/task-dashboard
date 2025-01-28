@@ -1,46 +1,86 @@
-# Getting Started with Create React App
+# Dashboard de Monitoramento de Tarefas
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este é um painel de controle (dashboard) para monitoramento de tarefas em um projeto, desenvolvido como parte de um desafio técnico para uma vaga de Desenvolvedor Frontend.
 
-## Available Scripts
+## Funcionalidades
 
-In the project directory, you can run:
+- **Listagem de Tarefas**: Exibe uma lista de tarefas com as seguintes informações:
+  - Título da tarefa
+  - Descrição breve
+  - Status (Pendente, Em progresso, Concluída)
+  - Prioridade (Baixa, Média, Alta)
+  - Responsável
+  - Data de criação
 
-### `npm start`
+- **Adicionar Nova Tarefa**: Um formulário para criar novas tarefas, com os seguintes campos:
+  - Título
+  - Descrição
+  - Prioridade
+  - Responsável
+  - Data de vencimento
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **Filtragem e Ordenação**: Permite ao usuário filtrar as tarefas por status e prioridade, além de ordenar as tarefas por data de criação ou data de vencimento.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- **Gráficos** (Bônus): Pode incluir gráficos para monitoramento visual das tarefas.
 
-### `npm test`
+## Tecnologias Utilizadas
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React**: Framework JavaScript para construção da interface.
+- **Material UI**: Biblioteca de componentes React para um design limpo e responsivo.
+- **TypeScript**: Para garantir tipagem estática e evitar erros comuns.
+- **React Context API**: Utilizado para gerenciar o estado global da aplicação.
+- **Jest e React Testing Library**: Para testes unitários e de integração.
 
-### `npm run build`
+## Como Rodar o Projeto Localmente
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Siga as instruções abaixo para rodar o projeto em sua máquina localmente:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 1. Clone o Repositório
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+git clone https://github.com/SEU_USUARIO/task-dashboard.git
+```
+### 2. Navegue até o diretório do projeto
 
-### `npm run eject`
+```bash
+cd task-dashboard
+```
+### 3. Instale as dependências
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+```bash
+npm install
+```
+### 4. Inicie o servidor de desenvolvimento
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+npm start
+```
+O projeto estará disponível no navegador em http://localhost:3000.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Testes
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+O projeto utiliza **Jest e React Testing Library** para garantir que os componentes e funcionalidades essenciais estão funcionando corretamente. Para rodar os testes:
 
-## Learn More
+```bash
+npm test
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Testes Automatizados
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  - **Cobertura de testes:** Foram implementados testes unitários para os componentes principais (como TaskForm, TaskList, e outros).
+
+  - **Verificação de funcionalidade:** Os testes verificam a renderização correta dos componentes, manipulação de eventos e integração com o estado global.
+
+## Estrutura do Projeto
+
+O projeto segue a estrutura padrão de um aplicativo React com a divisão em componentes reutilizáveis e modularizados. Abaixo, a estrutura básica de diretórios:
+
+```bash
+src/
+│
+├── components/ # Componentes reutilizáveis (TaskForm, TaskList, etc.)
+├── context/    # Gerenciamento de estado (TaskContext)
+├── App.tsx     # Componente principal
+├── index.tsx   # Arquivo de entrada da aplicação
+└── styles/     # Arquivos de estilo globais
+```

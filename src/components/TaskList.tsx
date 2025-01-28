@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { useTaskContext } from '../context/TaskContext';
+import { useTaskContext } from '../context/TaskContext.tsx';
 import { Button, Card, Typography, Box } from '@mui/material';
-import { Task } from '../context/TaskContext';
+import { Task } from '../context/TaskContext.tsx';
 
 const TaskList: React.FC = () => {
   const { tasks, removeTask, filterTasks } = useTaskContext();
