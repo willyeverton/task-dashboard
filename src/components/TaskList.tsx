@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTaskContext } from '../context/TaskContext.tsx';
 import { Button, Card, Typography, Box } from '@mui/material';
 import { Task } from '../context/TaskContext.tsx';
@@ -6,6 +6,10 @@ import { Task } from '../context/TaskContext.tsx';
 const TaskList: React.FC = () => {
   const { tasks, removeTask, filterTasks } = useTaskContext();
   const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
+
+  useEffect(() => {
+    setFilteredTasks(tasks);
+  }, [tasks]);
 
   const handleFilter = (status: string, priority: string) => {
     const filtered = filterTasks(status, priority);

@@ -23,6 +23,7 @@ const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
 export const useTaskContext = () => {
   const context = useContext(TaskContext);
+
   if (!context) {
     throw new Error('useTaskContext must be used within a TaskProvider');
   }
@@ -33,19 +34,25 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const [tasks, setTasks] = useState<Task[]>([]);
 
   const addTask = (task: Task) => {
-    setTasks((prevTasks) => [...prevTasks, task]);
+    setTasks([...tasks, task]);
   };
 
   const removeTask = (taskId: string) => {
-    setTasks((prevTasks) => prevTasks.filter((task) => task.id !== taskId));
+    setTasks([...tasks
+      .filter((task) =>
+        task.id !== taskId
+      )
+    ]);
   };
 
   const editTask = (updatedTask: Task) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === updatedTask.id ? { ...task, ...updatedTask } : task
+    setTasks([...tasks
+      .map((task) =>
+        task.id === updatedTask.id
+          ? updatedTask
+          : task
       )
-    );
+    ]);
   };
 
   const filterTasks = (status: string, priority: string) => {

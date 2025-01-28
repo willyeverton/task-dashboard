@@ -1,35 +1,33 @@
 import React, { useState } from 'react';
-import { useTaskContext } from '../context/TaskContext.tsx';
+import { Task, useTaskContext } from '../context/TaskContext.tsx';
 import { Button, TextField, MenuItem, Select, InputLabel, FormControl, SelectChangeEvent } from '@mui/material';
 
 const TaskForm: React.FC = () => {
   const { addTask } = useTaskContext();
 
-  const [task, setTask] = useState({
+  const [task, setTask] = useState<Task>({
     title: '',
     description: '',
     status: 'Pendente',
     priority: 'Baixa',
     responsible: '',
-    dueDate: '',
-  });
+    dueDate: new Date()
+  } as Task);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }> | SelectChangeEvent<string>
   ) => {
     const { name, value } = e.target;
-    setTask({ ...task, [name as string]: value });
+    task[name as string] = value;
+    setTask({ ...task });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newTask = {
       ...task,
-      id: new Date().toISOString(),
+      id: Date.now().toString(),
       createdAt: new Date(),
-      dueDate: new Date(task.dueDate),
-      status: task.status as "Pendente" | "Em progresso" | "Concluída",
-      priority: task.priority as "Baixa" | "Média" | "Alta"
     };
     addTask(newTask);
   };
