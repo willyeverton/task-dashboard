@@ -2,12 +2,13 @@ import { Button, TextField, MenuItem, Select, InputLabel, FormControl, Box } fro
 import { TaskFormProps } from '../../../types/task.types';
 import { useTaskFormManager } from '../../../hooks/useTaskFormManager';
 import React from 'react';
+import { ButtonGroup, FormContainer, StyledButton } from './styles';
 
 const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
   const { task, handleChange, handleSubmit } = useTaskFormManager(editingTask, onClose);
 
   return (
-    <Box sx={{ p: 2 }}>
+    <FormContainer>
       <form onSubmit={handleSubmit}>
         <TextField
           label="Título"
@@ -66,31 +67,22 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
             sx={{ mb: 2 }}
           />
         </FormControl>
-        <Box sx={{
-          display: 'flex',
-          gap: 2,
-          flexWrap: 'wrap',
-          mt: 2
-        }}>
-          <Button
+        <ButtonGroup>
+          <StyledButton
             variant="outlined"
-            fullWidth
             onClick={onClose}
-            sx={{ flex: 1, minWidth: '200px' }}
           >
             Cancelar
-          </Button>
-          <Button
+          </StyledButton>
+          <StyledButton
             type="submit"
             variant="contained"
-            fullWidth
-            sx={{ flex: 1, minWidth: '200px' }}
           >
             {editingTask ? 'Salvar Alterações' : 'Adicionar Tarefa'}
-          </Button>
-        </Box>
+          </StyledButton>
+        </ButtonGroup>
       </form>
-    </Box>
+    </FormContainer>
   );
 };
 

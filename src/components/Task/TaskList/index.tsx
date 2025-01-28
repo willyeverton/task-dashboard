@@ -7,6 +7,7 @@ import { TaskSorting } from '../../TaskSorting';
 import { TaskCard } from '../TaskCard';
 import { DeleteConfirmDialog } from '../../DeleteConfirmDialog';
 import { useTaskListManager } from 'hooks/useTaskListManager';
+import { FilterSection } from './styles';
 
 const TaskList: React.FC = () => {
 
@@ -35,13 +36,7 @@ const TaskList: React.FC = () => {
     <Box>
       <TaskHeader onAddNew={handleAddNew} />
 
-      <Box sx={{
-        display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
-        justifyContent: 'space-between',
-        gap: 2,
-        mb: 2
-      }}>
+      <FilterSection>
         <TaskFilters
           filterStatus={filterStatus}
           filterPriority={filterPriority}
@@ -55,7 +50,7 @@ const TaskList: React.FC = () => {
           onSortByChange={(value) => setSortBy(value)}
           onSortOrderChange={() => setSortOrder(prev => prev === 'asc' ? 'desc' : 'asc')}
         />
-      </Box>
+      </FilterSection>
 
       <Grid container spacing={2}>
         {filteredTasks.map((task) => (
