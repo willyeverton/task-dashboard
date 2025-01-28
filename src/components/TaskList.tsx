@@ -35,6 +35,19 @@ const TaskList: React.FC = () => {
     setOpenDialog(true);
   };
 
+  const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
+  const [taskToDelete, setTaskToDelete] = useState<string>('');
+
+  const handleDeleteClick = (taskId: string) => {
+    setTaskToDelete(taskId);
+    setOpenDeleteDialog(true);
+  };
+
+  const handleConfirmDelete = () => {
+    removeTask(taskToDelete);
+    setOpenDeleteDialog(false);
+  };
+
   return (
     <Box>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
@@ -92,7 +105,7 @@ const TaskList: React.FC = () => {
                 <Typography variant="body2">Responsável: {task.responsible}</Typography>
                 <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
                   <Button onClick={() => handleEdit(task)}>Editar</Button>
-                  <Button onClick={() => removeTask(task.id)}>Remover</Button>
+                  <Button onClick={() => handleDeleteClick(task.id)}>Remover</Button>
                 </Box>
               </Box>
             </Card>
@@ -103,6 +116,24 @@ const TaskList: React.FC = () => {
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <TaskForm editingTask={editingTask} onClose={() => setOpenDialog(false)} />
       </Dialog>
+
+      <Dialog open={openDeleteDialog} onClose={() => setOpenDeleteDialog(false)}>
+        <Box sx={{ p: 2 }}>
+          <Typography variant="h6" gutterBottom>
+            Confirmar exclusão
+          </Typography>
+          <Typography variant="body1" sx={{ mb: 2 }}>
+            Deseja realmente excluir esta tarefa?
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, justifyContent: 'flex-end' }}>
+            <Button onClick={() => setOpenDeleteDialog(false)}>Cancelar</Button>
+            <Button variant="contained" color="error" onClick={handleConfirmDelete}>
+              Excluir
+            </Button>
+          </Box>
+        </Box>
+      </Dialog>
+
     </Box>
   );
 };
