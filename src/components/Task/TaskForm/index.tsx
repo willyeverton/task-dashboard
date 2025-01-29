@@ -5,7 +5,15 @@ import React from 'react';
 import { ButtonGroup, FormContainer, StyledButton } from './styles';
 
 const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
-  const { task, handleChange, handleSubmit } = useTaskFormManager(editingTask, onClose);
+  const {
+    task,
+    errors,
+    touched,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    isValid
+  } = useTaskFormManager(editingTask, onClose);
 
   return (
     <FormContainer>
@@ -15,6 +23,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
           name="title"
           value={task.title}
           onChange={handleChange}
+          onBlur={() => handleBlur('title')}
+          error={touched.title && !!errors.title}
+          helperText={touched.title && errors.title}
           required
           fullWidth
           sx={{ mb: 2 }}
@@ -26,6 +37,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
           name="description"
           value={task.description}
           onChange={handleChange}
+          onBlur={() => handleBlur('description')}
+          error={touched.description && !!errors.description}
+          helperText={touched.description && errors.description}
           required
           fullWidth
           sx={{ mb: 2 }}
@@ -51,6 +65,9 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
           name="responsible"
           value={task.responsible}
           onChange={handleChange}
+          onBlur={() => handleBlur('responsible')}
+          error={touched.responsible && !!errors.responsible}
+          helperText={touched.responsible && errors.responsible}
           required
           fullWidth
           sx={{ mb: 2 }}
@@ -58,10 +75,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
         <FormControl fullWidth sx={{ mb: 2 }}>
           <TextField
             label="Vencimento"
-            type="date"
+            type="datetime-local"
             name="dueDate"
             value={task.dueDate}
             onChange={handleChange}
+            onBlur={() => handleBlur('dueDate')}
+            error={touched.dueDate && !!errors.dueDate}
+            helperText={touched.dueDate && errors.dueDate}
             required
             fullWidth
             sx={{ mb: 2 }}
@@ -77,6 +97,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
           <StyledButton
             type="submit"
             variant="contained"
+            disabled={!isValid}
           >
             {editingTask ? 'Salvar Alterações' : 'Adicionar Tarefa'}
           </StyledButton>

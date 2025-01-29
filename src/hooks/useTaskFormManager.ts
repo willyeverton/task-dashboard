@@ -1,65 +1,129 @@
 import { useState, useEffect } from 'react';
 import { useTaskContext } from '../context/TaskContext';
 import { Task } from '../types/task.types';
-import { SelectChangeEvent } from '@mui/material';
+
+const initialTaskState: Task = {
+  title: '',
+  description: '',
+  status: 'Pendente',
+  priority: 'Baixa',
+  responsible: '',
+  dueDate: new Date().toISOString().slice(0, 16),
+  createdAt: new Date(),
+  id: ''
+};
 
 export const useTaskFormManager = (editingTask: Task | null | undefined, onClose?: () => void) => {
   const { addTask, editTask } = useTaskContext();
-  const [task, setTask] = useState<Task>({
-    title: '',
-    description: '',
-    status: 'Pendente',
-    priority: 'Baixa',
-    responsible: '',
-    dueDate: new Date().toISOString().split('T')[0],
-    createdAt: new Date(),
-    id: ''
-  });
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
+  const [task, setTask] = useState<Task>(initialTaskState);
+  const [isValid, setIsValid] = useState<Boolean>(false);
 
   useEffect(() => {
     if (editingTask) {
       setTask({
         ...editingTask,
-        dueDate: new Date(editingTask.dueDate).toISOString().split('T')[0]
+        dueDate: new Date(editingTask.dueDate).toISOString().slice(0, 16)
       });
     }
   }, [editingTask]);
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | { name?: string; value: unknown }> | SelectChangeEvent<unknown>
-  ) => {
+  useEffect(() => {
+    validateForm();
+  }, [task]);
+
+  const validateField = (name: string, value: string): string => {
+    switch (name) {
+      case 'title':
+        if (!value.trim()) return 'Título é obrigatório';
+        if (value.length < 3) return 'Título deve ter no mínimo 3 caracteres';
+        return '';
+
+      case 'description':
+        if (!value.trim()) return 'Descrição é obrigatória';
+        if (value.length < 10) return 'Descrição deve ter no mínimo 10 caracteres';
+        return '';
+
+      case 'responsible':
+        if (!value.trim()) return 'Responsável é obrigatório';
+        return '';
+
+      case 'dueDate':
+        if (!value) return 'Data de vencimento é obrigatória';
+        if (new Date(value) < new Date()) return 'Data deve ser futura';
+        return '';
+
+      default:
+        return '';
+    }
+  };
+
+  const validateForm = (): boolean => {
+    const newErrors: FormErrors = {};
+
+    Object.keys(task).forEach(key => {
+      const error = validateField(key, task[key as keyof Task]?.toString() || '');
+      if (error) {
+        newErrors[key as keyof FormErrors] = error;
+      }
+    });
+
+    const formIsValid = Object.keys(newErrors).length === 0;
+    setErrors(newErrors);
+    setIsValid(formIsValid);
+
+    return formIsValid;
+  };
+
+  const handleChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
-    setTask(prev => ({ ...prev, [name as string]: value }));
+    setTask(prev => ({ ...prev, [name]: value }));
+    setTouched(prev => ({ ...prev, [name]: true }));
+
+    const error = validateField(name, value);
+    setErrors(prev => ({ ...prev, [name]: error }));
+  };
+
+  const handleBlur = (name: string) => {
+    setTouched(prev => ({ ...prev, [name]: true }));
+
+    const error = validateField(name, task[name as keyof Task]?.toString() || '');
+    setErrors(prev => ({ ...prev, [name]: error }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (editingTask) {
-      editTask(task);
-    } else {
-      const newTask = {
-        ...task,
-        id: Date.now().toString(),
-        createdAt: new Date(),
-      };
-      addTask(newTask);
+
+    try {
+      if (editingTask) {
+        editTask(task);
+      }
+      else {
+        const newTask = {
+          ...task,
+          id: Date.now().toString(),
+          createdAt: new Date(),
+        };
+        addTask(newTask);
+      }
+      setTask(initialTaskState);
+
+      if (onClose) {
+        onClose();
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
     }
-    setTask({
-      title: '',
-      description: '',
-      status: 'Pendente',
-      priority: 'Baixa',
-      responsible: '',
-      dueDate: new Date().toISOString().split('T')[0],
-      createdAt: new Date(),
-      id: ''
-    });
-    if (onClose) onClose();
   };
 
   return {
     task,
     handleChange,
-    handleSubmit
+    handleSubmit,
+    errors,
+    touched,
+    handleBlur,
+    isValid
   };
 };
