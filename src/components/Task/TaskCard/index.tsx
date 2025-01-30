@@ -2,6 +2,7 @@ import { TaskCardProps } from 'types/task.types';
 import { StyledCard, CardContent, ButtonContainer } from './styles';
 import { Button, Grid, Typography } from '@mui/material';
 import React from 'react';
+import { dateFormatter } from '../../../utils/dateFormatter';
 
 export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete }) => (
   <Grid item xs={12} sm={6} md={4} lg={3} xl={2}>
@@ -12,6 +13,9 @@ export const TaskCard: React.FC<TaskCardProps> = ({ task, onEdit, onDelete }) =>
         <Typography variant="body2">Status: {task.status}</Typography>
         <Typography variant="body2">Prioridade: {task.priority}</Typography>
         <Typography variant="body2">Responsável: {task.responsible}</Typography>
+        <Typography variant="body2" color={dateFormatter.isOverdue(task.dueDate) ? 'error' : 'text.secondary'}>
+          Vencimento: {dateFormatter.toLocalDateTime(task.dueDate)}
+        </Typography>
         <ButtonContainer>
           <Button onClick={() => onEdit(task)}>Editar</Button>
           <Button onClick={() => onDelete(task.id)}>Remover</Button>

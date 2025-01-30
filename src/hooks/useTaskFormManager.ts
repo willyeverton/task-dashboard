@@ -1,17 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useTaskContext } from '../context/TaskContext';
 import { Task } from '../types/task.types';
+import { dateFormatter } from 'utils/dateFormatter';
 
-const initialTaskState: Task = {
+const initialTaskState = {
   title: '',
   description: '',
   status: 'Pendente',
   priority: 'Baixa',
   responsible: '',
-  dueDate: new Date().toISOString().slice(0, 16),
-  createdAt: new Date(),
-  id: ''
-};
+  dueDate: dateFormatter.toInputDateTime(new Date())
+} as Task;
 
 export const useTaskFormManager = (editingTask: Task | null | undefined, onClose?: () => void) => {
   const { addTask, editTask } = useTaskContext();
@@ -22,10 +21,7 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
 
   useEffect(() => {
     if (editingTask) {
-      setTask({
-        ...editingTask,
-        dueDate: new Date(editingTask.dueDate).toISOString().slice(0, 16)
-      });
+      setTask(editingTask);
     }
   }, [editingTask]);
 
