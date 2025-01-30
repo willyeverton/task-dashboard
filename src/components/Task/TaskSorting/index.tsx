@@ -9,31 +9,33 @@ import React from 'react';
  * @param onSortByChange - A function to be called when the sorting criteria is changed.
  * @param onSortOrderChange - A function to be called when the sorting order is changed.
  */
-export const TaskSorting: React.FC<TaskSortingProps> = ({
+export const TaskSorting = React.memo<TaskSortingProps>(({
   sortBy,
   sortOrder,
   onSortByChange,
   onSortOrderChange
-}) => (
-  <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
-    <FormControl sx={{ minWidth: 120 }}>
-      <InputLabel>Ordenar por</InputLabel>
-      <Select
-        value={sortBy}
-        label="Ordenar por"
-        onChange={(e) => onSortByChange(e.target.value)}
-      >
-        <MenuItem value="createdAt">Data de Criação</MenuItem>
-        <MenuItem value="dueDate">Data de Vencimento</MenuItem>
-        <MenuItem value="title">Título</MenuItem>
-        <MenuItem value="priority">Prioridade</MenuItem>
-      </Select>
-    </FormControl>
+}) => {
+  return (
+    <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
+      <FormControl sx={{ minWidth: 120 }}>
+        <InputLabel>Ordenar por</InputLabel>
+        <Select
+          value={sortBy}
+          label="Ordenar por"
+          onChange={(e) => onSortByChange(e.target.value)}
+        >
+          <MenuItem value="createdAt">Data de Criação</MenuItem>
+          <MenuItem value="dueDate">Data de Vencimento</MenuItem>
+          <MenuItem value="title">Título</MenuItem>
+          <MenuItem value="priority">Prioridade</MenuItem>
+        </Select>
+      </FormControl>
 
-    <Button
-      onClick={onSortOrderChange}
-      startIcon={sortOrder === 'asc' ? '↑' : '↓'}
-    >
-    </Button>
-  </Box>
-);
+      <Button
+        onClick={onSortOrderChange}
+        startIcon={sortOrder === 'asc' ? '↑' : '↓'}
+      >
+      </Button>
+    </Box>
+  )
+});

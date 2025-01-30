@@ -1,5 +1,5 @@
 import { useTaskContext } from "context/TaskContext";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * The `useTaskListManager` hook is responsible for managing the state and functionality related to the task list in the application.
@@ -43,42 +43,43 @@ export const useTaskListManager = () => {
   }, [tasks]);
 
   // Handle filter change
-  const handleFilter = () => {
+  const handleFilter = useCallback(() => {
     const filtered = filterTasks(filterStatus, filterPriority);
     setFilteredTasks(filtered);
-  };
+  }, [filterStatus, filterPriority, filterTasks]);
+
 
   // Filter tasks when filter status or priority changes
   useEffect(() => {
     handleFilter();
   }, [filterStatus, filterPriority]);
 
-  /// Handle edit click
-  const handleEdit = (task: Task) => {
+  // Handle edit click
+  const handleEdit = useCallback((task: Task) => {
     setEditingTask(task);
     setOpenDialog(true);
-  };
+  }, []);
 
   // Handle add new click
-  const handleAddNew = () => {
+  const handleAddNew = useCallback(() => {
     setEditingTask(null);
     setOpenDialog(true);
-  };
+  }, []);
 
   // Handle delete click
-  const handleDeleteClick = (taskId: string) => {
+  const handleDeleteClick = useCallback((taskId: string) => {
     setTaskToDelete(taskId);
     setOpenDeleteDialog(true);
-  };
+  }, []);
 
   // Handle delete confirmation
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = useCallback(() => {
     removeTask(taskToDelete);
     setOpenDeleteDialog(false);
-  };
+  }, [taskToDelete, removeTask]);
 
   // Sorting logic
-  const handleSort = (tasks: Task[]) => {
+  const handleSort = useCallback((tasks: Task[]) => {
     return [...tasks].sort((a, b) => {
       switch (sortBy) {
         case 'title':
@@ -100,7 +101,7 @@ export const useTaskListManager = () => {
             : b.createdAt.getTime() - a.createdAt.getTime();
       }
     });
-  };
+  }, [sortBy, sortOrder]);
 
   // Sort tasks whenever sortBy or sortOrder changes
   useEffect(() => {
