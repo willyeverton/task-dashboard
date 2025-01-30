@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 import { Task, TaskContextType } from 'types/task.types';
+import { taskStorage } from '../services/taskStorage';
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);
 
@@ -13,28 +14,26 @@ export const useTaskContext = () => {
 };
 
 export const TaskProvider = ({ children }: { children: ReactNode }) => {
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[]>(() => taskStorage.load());
 
   const addTask = (task: Task) => {
-    setTasks([...tasks, task]);
+    const updatedTasks = [...tasks, task];
+    setTasks(updatedTasks);
+    taskStorage.save(updatedTasks);
   };
 
   const removeTask = (taskId: string) => {
-    setTasks([...tasks
-      .filter((task) =>
-        task.id !== taskId
-      )
-    ]);
+    const updatedTasks = tasks.filter(task => task.id !== taskId);
+    setTasks(updatedTasks);
+    taskStorage.save(updatedTasks);
   };
 
   const editTask = (updatedTask: Task) => {
-    setTasks([...tasks
-      .map((task) =>
-        task.id === updatedTask.id
-          ? updatedTask
-          : task
-      )
-    ]);
+    const updatedTasks = tasks.map(task =>
+      task.id === updatedTask.id ? updatedTask : task
+    );
+    setTasks(updatedTasks);
+    taskStorage.save(updatedTasks);
   };
 
   const filterTasks = (status: string, priority: string) => {
