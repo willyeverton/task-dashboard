@@ -1,7 +1,14 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
-import { TaskSortingProps } from 'types/task.types';
 
+/**
+ * A React functional component that renders the task sorting options.
+ *
+ * @param sortBy - The current sorting criteria.
+ * @param sortOrder - The current sorting order.
+ * @param onSortByChange - A function to be called when the sorting criteria is changed.
+ * @param onSortOrderChange - A function to be called when the sorting order is changed.
+ */
 export const TaskSorting: React.FC<TaskSortingProps> = ({
   sortBy,
   sortOrder,

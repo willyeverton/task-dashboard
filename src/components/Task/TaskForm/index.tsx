@@ -1,9 +1,15 @@
 import { TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
-import { TaskFormProps } from '../../../types/task.types';
 import { useTaskFormManager } from '../../../hooks/useTaskFormManager';
 import React from 'react';
 import { ButtonGroup, FormContainer, StyledButton } from './styles';
 
+/**
+ * Renders a TaskForm component that allows users to create or edit tasks.
+ *
+ * @param editingTask - The task object to be edited, if any.
+ * @param onClose - A function to be called when the form is closed.
+ * @returns A React component that renders the TaskForm.
+ */
 const TaskForm: React.FC<TaskFormProps> = ({ editingTask, onClose }) => {
   const {
     task,

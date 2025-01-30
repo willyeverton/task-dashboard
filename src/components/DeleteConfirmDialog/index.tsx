@@ -1,7 +1,13 @@
 import { Box, Button, Dialog, Typography } from '@mui/material';
 import React from 'react';
-import { DeleteConfirmDialogProps } from 'types/task.types';
 
+/**
+ * A React component that displays a confirmation dialog for deleting a task.
+ *
+ * @param open - A boolean indicating whether the dialog should be displayed.
+ * @param onClose - A function to be called when the dialog is closed.
+ * @param onConfirm - A function to be called when the user confirms the deletion.
+ */
 export const DeleteConfirmDialog: React.FC<DeleteConfirmDialogProps> = ({
   open,
   onClose,

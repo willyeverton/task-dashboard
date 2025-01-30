@@ -1,7 +1,15 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 import React from 'react';
-import { TaskFiltersProps } from 'types/task.types';
 
+/**
+ * The `TaskFilters` component is a React functional component that renders a set of filters for tasks. It allows the user to filter tasks by status (Pending, In Progress, Completed) and priority (Low, Medium, High). The component receives the current filter values and callback functions to update the filters as props.
+ *
+ * @param filterStatus - The current status filter value.
+ * @param filterPriority - The current priority filter value.
+ * @param onStatusChange - A callback function to update the status filter value.
+ * @param onPriorityChange - A callback function to update the priority filter value.
+ * @returns A React functional component that renders the task filters.
+ */
 export const TaskFilters: React.FC<TaskFiltersProps> = ({
   filterStatus,
   filterPriority,

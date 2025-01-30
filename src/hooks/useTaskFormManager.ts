@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useTaskContext } from '../context/TaskContext';
-import { Task } from '../types/task.types';
 import { dateFormatter } from 'utils/dateFormatter';
 
 const initialTaskState = {
@@ -12,6 +11,13 @@ const initialTaskState = {
   dueDate: dateFormatter.toInputDateTime(new Date())
 } as Task;
 
+/**
+ * A React hook that manages the state and behavior of a task form.
+ *
+ * @param editingTask - The task being edited, or `null` if creating a new task.
+ * @param onClose - An optional callback function to be called when the form is submitted.
+ * @returns An object containing the task state, form event handlers, form validation errors, and form validity.
+ */
 export const useTaskFormManager = (editingTask: Task | null | undefined, onClose?: () => void) => {
   const { addTask, editTask } = useTaskContext();
   const [errors, setErrors] = useState<FormErrors>({});
@@ -19,16 +25,19 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
   const [task, setTask] = useState<Task>(initialTaskState);
   const [isValid, setIsValid] = useState<Boolean>(false);
 
+  // Initialize task state with editingTask if provided
   useEffect(() => {
     if (editingTask) {
       setTask(editingTask);
     }
   }, [editingTask]);
 
+  // Validate form on task state change
   useEffect(() => {
     validateForm();
   }, [task]);
 
+  // Validate form on form submission
   const validateField = (name: string, value: string): string => {
     switch (name) {
       case 'title':
@@ -55,6 +64,7 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
     }
   };
 
+  // Validate the entire form
   const validateForm = (): boolean => {
     const newErrors: FormErrors = {};
 
@@ -72,6 +82,7 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
     return formIsValid;
   };
 
+  // Handle form changes
   const handleChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setTask(prev => ({ ...prev, [name]: value }));
@@ -81,6 +92,7 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
     setErrors(prev => ({ ...prev, [name]: error }));
   };
 
+  // Handle form blur
   const handleBlur = (name: string) => {
     setTouched(prev => ({ ...prev, [name]: true }));
 
@@ -88,6 +100,7 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
     setErrors(prev => ({ ...prev, [name]: error }));
   };
 
+  // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
