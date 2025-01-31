@@ -1,5 +1,5 @@
 import { useTaskContext } from "context/TaskContext";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 
 /**
  * The `useTaskListManager` hook is responsible for managing the state and functionality related to the task list in the application.
@@ -42,17 +42,26 @@ export const useTaskListManager = () => {
     setFilteredTasks(tasks);
   }, [tasks]);
 
-  // Handle filter change
-  const handleFilter = useCallback(() => {
+  // Sorting logic
+  const handleSort = useCallback((tasks: Task[]) => {
+    return [...tasks].sort((a, b) => {
+      switch (sortBy) {
+        case 'dueDate':
+          return sortOrder === 'asc'
+            ? new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
+            : new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
+        default: // createdAt
+          return sortOrder === 'asc'
+            ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      }
+    });
+  }, [sortBy, sortOrder]);
+
+  const filteredAndSortedTasks = useMemo(() => {
     const filtered = filterTasks(filterStatus, filterPriority);
-    setFilteredTasks(filtered);
-  }, [filterStatus, filterPriority, filterTasks]);
-
-
-  // Filter tasks when filter status or priority changes
-  useEffect(() => {
-    handleFilter();
-  }, [filterStatus, filterPriority]);
+    return handleSort(filtered);
+  }, [filterStatus, filterPriority, sortBy, sortOrder, tasks]);
 
   // Handle edit click
   const handleEdit = useCallback((task: Task) => {
@@ -78,28 +87,6 @@ export const useTaskListManager = () => {
     setOpenDeleteDialog(false);
   }, [taskToDelete, removeTask]);
 
-  // Sorting logic
-  const handleSort = useCallback((tasks: Task[]) => {
-    return [...tasks].sort((a, b) => {
-      switch (sortBy) {
-        case 'dueDate':
-          return sortOrder === 'asc'
-            ? new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
-            : new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
-        default: // createdAt
-          return sortOrder === 'asc'
-            ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-            : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      }
-    });
-  }, [sortBy, sortOrder]);
-
-  // Sort tasks whenever sortBy or sortOrder changes
-  useEffect(() => {
-    const sorted = handleSort(filteredTasks);
-    setFilteredTasks(sorted);
-  }, [sortBy, sortOrder]);
-
   return {
     filteredTasks,
     editingTask,
@@ -109,6 +96,7 @@ export const useTaskListManager = () => {
     sortBy,
     sortOrder,
     openDeleteDialog,
+    filteredAndSortedTasks,
     handleEdit,
     handleAddNew,
     handleDeleteClick,

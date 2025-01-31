@@ -11,8 +11,8 @@ export const FilterSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
   justifyContent: 'space-between',
-  gap: 16,
-  marginBottom: 16,
+  gap: theme.spacing(2),
+  marginBottom: theme.spacing(2),
   [theme.breakpoints.down('md')]: {
     flexDirection: 'column'
   }

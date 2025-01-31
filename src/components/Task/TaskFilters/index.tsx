@@ -1,5 +1,5 @@
 import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
-import React from 'react';
+import React, { useMemo } from 'react';
 
 /**
  * The `TaskFilters` component is a React functional component that renders a set of filters for tasks. It allows the user to filter tasks by status (Pending, In Progress, Completed) and priority (Low, Medium, High). The component receives the current filter values and callback functions to update the filters as props.
@@ -10,12 +10,18 @@ import React from 'react';
  * @param onPriorityChange - A callback function to update the priority filter value.
  * @returns A React functional component that renders the task filters.
  */
-export const TaskFilters = React.memo<TaskFiltersProps>(({
+export const TaskFilters: React.FC<TaskFiltersProps> = (({
   filterStatus,
   filterPriority,
   onStatusChange,
   onPriorityChange
 }) => {
+
+  const filterOptions = useMemo(() => ({
+    status: ['Pendente', 'Em progresso', 'Concluída'],
+    priority: ['Baixa', 'Média', 'Alta']
+  }), []);
+
   return (
     <fieldset style={{ border: '1px solid #ddd', borderRadius: '4px' }}>
       <legend>Filtros</legend>
@@ -28,9 +34,9 @@ export const TaskFilters = React.memo<TaskFiltersProps>(({
             onChange={(e) => onStatusChange(e.target.value)}
           >
             <MenuItem value="">Todos</MenuItem>
-            <MenuItem value="Pendente">Pendente</MenuItem>
-            <MenuItem value="Em progresso">Em progresso</MenuItem>
-            <MenuItem value="Concluída">Concluída</MenuItem>
+            {filterOptions.status.map((status) => (
+              <MenuItem key={status} value={status}>{status}</MenuItem>
+            ))}
           </Select>
         </FormControl>
 
@@ -42,9 +48,9 @@ export const TaskFilters = React.memo<TaskFiltersProps>(({
             onChange={(e) => onPriorityChange(e.target.value)}
           >
             <MenuItem value="">Todas</MenuItem>
-            <MenuItem value="Baixa">Baixa</MenuItem>
-            <MenuItem value="Média">Média</MenuItem>
-            <MenuItem value="Alta">Alta</MenuItem>
+            {filterOptions.priority.map((priority) => (
+              <MenuItem key={priority} value={priority}>{priority}</MenuItem>
+            ))}
           </Select>
         </FormControl>
       </Box>

@@ -27,6 +27,7 @@ const TaskList: React.FC = () => {
     sortOrder,
     sortBy,
     openDeleteDialog,
+    filteredAndSortedTasks,
     setSortBy,
     handleAddNew,
     setFilterStatus,
@@ -60,7 +61,7 @@ const TaskList: React.FC = () => {
       </FilterSection>
 
       <Grid container spacing={2}>
-        {filteredTasks.map((task) => (
+        {filteredAndSortedTasks.map((task) => (
           <TaskCard
             key={task.id}
             task={task}
