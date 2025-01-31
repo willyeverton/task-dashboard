@@ -2,16 +2,12 @@
  * Provides utility functions for formatting dates.
  */
 export const dateFormatter = {
-  // Formats a date to a string in the format "dd/mm/yyyy".
-  toLocalDateTime: (date: Date | string): string => {
+  toLocalDateTime: (date: Date | string | null | undefined): string => {
+    if (!date) return 'Invalid Date';
     const d = new Date(date);
-    return d.toLocaleString('pt-BR', {
-      day: '2-digit',
-      month: '2-digit',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    });
+    return d instanceof Date && !isNaN(d.getTime())
+      ? d.toLocaleString()
+      : 'Invalid Date';
   },
 
   // Formats a date to a string in the format "yyyy-mm-ddThh:mm".
@@ -20,8 +16,11 @@ export const dateFormatter = {
     return d.toISOString().slice(0, 16);
   },
 
-  // Checks if a date is overdue (i.e., before the current date).
-  isOverdue: (dueDate: Date | string): boolean => {
-    return new Date(dueDate) < new Date();
+  isOverdue: (date: Date | string | null | undefined): boolean => {
+    if (!date) return false;
+    const d = new Date(date);
+    return d instanceof Date && !isNaN(d.getTime())
+      ? d.getTime() < Date.now()
+      : false;
   }
 };

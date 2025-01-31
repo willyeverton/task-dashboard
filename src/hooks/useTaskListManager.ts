@@ -37,11 +37,6 @@ export const useTaskListManager = () => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState<string>('');
 
-  // Handle sort change
-  useEffect(() => {
-    setFilteredTasks(tasks);
-  }, [tasks]);
-
   // Sorting logic
   const handleSort = useCallback((tasks: Task[]) => {
     return [...tasks].sort((a, b) => {
@@ -88,7 +83,6 @@ export const useTaskListManager = () => {
   }, [taskToDelete, removeTask]);
 
   return {
-    filteredTasks,
     editingTask,
     openDialog,
     filterStatus,

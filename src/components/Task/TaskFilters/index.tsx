@@ -10,7 +10,7 @@ import React, { useMemo } from 'react';
  * @param onPriorityChange - A callback function to update the priority filter value.
  * @returns A React functional component that renders the task filters.
  */
-export const TaskFilters: React.FC<TaskFiltersProps> = (({
+const TaskFilters: React.FC<TaskFiltersProps> = (({
   filterStatus,
   filterPriority,
   onStatusChange,
@@ -23,7 +23,7 @@ export const TaskFilters: React.FC<TaskFiltersProps> = (({
   }), []);
 
   return (
-    <fieldset style={{ border: '1px solid #ddd', borderRadius: '4px' }}>
+    <fieldset style={{ border: '1px solid #ddd', borderRadius: '4px', width: 'max-content' }}>
       <legend>Filtros</legend>
       <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
         <FormControl sx={{ minWidth: 120 }}>
@@ -57,3 +57,5 @@ export const TaskFilters: React.FC<TaskFiltersProps> = (({
     </fieldset>
   )
 });
+
+export default TaskFilters;

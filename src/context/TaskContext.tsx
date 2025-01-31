@@ -32,7 +32,7 @@ export const useTaskContext = () => {
  * @returns {React.ReactElement} - The rendered component.
  */
 
-export const TaskProvider = ({ children }: { children: ReactNode }) => {
+export const TaskProvider = ({ children }: { children: ReactNode }): React.ReactElement => {
   const [tasks, setTasks] = useState<Task[]>(() => taskStorage.load());
 
   // Function to add a new task

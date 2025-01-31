@@ -16,8 +16,18 @@ export const TaskSorting = React.memo<TaskSortingProps>(({
   onSortOrderChange
 }) => {
   return (
-    <Box sx={{ display: 'flex', gap: 2, alignItems: 'flex-start' }}>
-      <FormControl sx={{ minWidth: 120 }}>
+    <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+      <Button sx={{
+        minWidth: 0, '& .MuiButton-startIcon': {
+          margin: 0,
+          fontSize: '1.6rem',
+        }
+      }}
+        onClick={onSortOrderChange}
+        startIcon={sortOrder === 'asc' ? '↑' : '↓'}
+      >
+      </Button>
+      <FormControl>
         <InputLabel>Ordenar por</InputLabel>
         <Select
           value={sortBy}
@@ -28,12 +38,6 @@ export const TaskSorting = React.memo<TaskSortingProps>(({
           <MenuItem value="dueDate">Data de Vencimento</MenuItem>
         </Select>
       </FormControl>
-
-      <Button
-        onClick={onSortOrderChange}
-        startIcon={sortOrder === 'asc' ? '↑' : '↓'}
-      >
-      </Button>
     </Box>
   )
 });

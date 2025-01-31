@@ -1,8 +1,9 @@
 {
   "compilerOptions": {
+    "moduleResolution": "bundler",
+    "module": "ES2022",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "moduleResolution": "node",
     "baseUrl": "src",
     "jsx": "react",
     "allowJs": true,

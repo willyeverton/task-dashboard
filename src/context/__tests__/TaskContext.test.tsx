@@ -1,34 +1,21 @@
-import { render, act } from '@testing-library/react';
-import { useTaskContext, TaskProvider } from '../TaskContext';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import { TaskProvider, useTaskContext } from '../TaskContext';
 import React from 'react';
+
+const TestComponent = () => {
+  const { tasks } = useTaskContext();
+  return <div>Task Count: {tasks.length}</div>;
+};
 
 describe('TaskContext', () => {
   it('provides task management functionality', () => {
-    const TestComponent = () => {
-      const { tasks, addTask } = useTaskContext();
-      return (
-        <div>
-          <span>Task Count: {tasks.length}</span>
-          <button onClick={() => addTask({
-            id: '1',
-            title: 'Test Task',
-            description: 'Description',
-            status: 'Pendente',
-            priority: 'Alta',
-            responsible: 'Tester',
-            dueDate: new Date().toISOString(),
-            createdAt: new Date()
-          })}>Add Task</button>
-        </div>
-      );
-    };
-
-    const { getByText } = render(
+    render(
       <TaskProvider>
         <TestComponent />
       </TaskProvider>
     );
 
-    expect(getByText('Task Count: 0')).toBeInTheDocument();
+    expect(screen.getByText('Task Count: 0')).toBeInTheDocument();
   });
 });

@@ -1,19 +1,30 @@
-
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 
-/**
- * The `FilterSection` component is a styled `Box` component that provides a layout for a filter section in the TaskList component.
- * It displays the filters in a row layout on larger screens, and switches to a column layout on smaller screens (below the 'md' breakpoint).
- * The component uses the `theme` object to apply responsive styles.
- */
 export const FilterSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
+  alignItems: 'center',
   justifyContent: 'space-between',
   gap: theme.spacing(2),
   marginBottom: theme.spacing(2),
-  [theme.breakpoints.down('md')]: {
-    flexDirection: 'column'
+  padding: theme.spacing(2),
+
+  [theme.breakpoints.down('sm')]: {
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    padding: theme.spacing(1),
+    gap: theme.spacing(2)
+  }
+}));
+
+export const TaskGrid = styled(Box)(({ theme }) => ({
+  display: 'grid',
+  gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+  gap: theme.spacing(2),
+
+  [theme.breakpoints.down('sm')]: {
+    gridTemplateColumns: '1fr',
+    gap: theme.spacing(1.5)
   }
 }));
