@@ -18,7 +18,7 @@ export const TaskCard = React.memo<TaskCardProps>(({ task, onEdit, onDelete }) =
       <StyledCard>
         <CardContent>
           <Typography variant="h6" noWrap>{task.title}</Typography>
-          <Typography variant="body2">{task.description}</Typography>
+          <Typography variant="body2">Criação: {dateFormatter.toLocalDateTime(task.createdAt)}</Typography>
           <Typography variant="body2">Status: {task.status}</Typography>
           <Typography variant="body2">Prioridade: {task.priority}</Typography>
           <Typography variant="body2">Responsável: {task.responsible}</Typography>

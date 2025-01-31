@@ -26,8 +26,6 @@ export const TaskSorting = React.memo<TaskSortingProps>(({
         >
           <MenuItem value="createdAt">Data de Criação</MenuItem>
           <MenuItem value="dueDate">Data de Vencimento</MenuItem>
-          <MenuItem value="title">Título</MenuItem>
-          <MenuItem value="priority">Prioridade</MenuItem>
         </Select>
       </FormControl>
 

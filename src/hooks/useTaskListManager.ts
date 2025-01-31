@@ -82,15 +82,6 @@ export const useTaskListManager = () => {
   const handleSort = useCallback((tasks: Task[]) => {
     return [...tasks].sort((a, b) => {
       switch (sortBy) {
-        case 'title':
-          return sortOrder === 'asc'
-            ? a.title.localeCompare(b.title)
-            : b.title.localeCompare(a.title);
-        case 'priority':
-          const priorityOrder = { 'Alta': 3, 'Média': 2, 'Baixa': 1 };
-          return sortOrder === 'asc'
-            ? priorityOrder[a.priority] - priorityOrder[b.priority]
-            : priorityOrder[b.priority] - priorityOrder[a.priority];
         case 'dueDate':
           return sortOrder === 'asc'
             ? new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime()
