@@ -1,20 +1,24 @@
 import React from 'react';
-import TaskList from './components/Task/TaskList';
-import { TaskProvider } from './context/TaskContext';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Chart } from 'pages/Chart';
 import './App.css';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { TaskProvider } from 'context/TaskContext';
+import TaskList from 'pages/TaskList';
 
-const App: React.FC = () => {
+function App() {
   return (
     <ErrorBoundary>
-      <div className="app">
-        <TaskProvider>
-          <TaskList />
-        </TaskProvider>
-      </div>
+      <TaskProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/chart" element={<Chart />} />
+            <Route path="/" element={<TaskList />} />
+          </Routes>
+        </BrowserRouter>
+      </TaskProvider>
     </ErrorBoundary>
   );
-};
-
+}
 
 export default App;

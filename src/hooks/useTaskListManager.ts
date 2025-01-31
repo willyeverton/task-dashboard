@@ -97,8 +97,8 @@ export const useTaskListManager = () => {
             : new Date(b.dueDate).getTime() - new Date(a.dueDate).getTime();
         default: // createdAt
           return sortOrder === 'asc'
-            ? a.createdAt.getTime() - b.createdAt.getTime()
-            : b.createdAt.getTime() - a.createdAt.getTime();
+            ? new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            : new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       }
     });
   }, [sortBy, sortOrder]);

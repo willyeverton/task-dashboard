@@ -1,13 +1,13 @@
 import React from 'react';
 import { Box, Dialog, Grid } from '@mui/material';
-import TaskForm from '../TaskForm';
-import { TaskHeader } from '../TaskHeader';
-import { TaskFilters } from '../TaskFilters';
-import { TaskSorting } from '../TaskSorting';
-import { TaskCard } from '../TaskCard';
-import { DeleteConfirmDialog } from '../../DeleteConfirmDialog';
 import { useTaskListManager } from 'hooks/useTaskListManager';
 import { FilterSection } from './styles';
+import { TaskHeader } from 'components/Task/TaskHeader';
+import { TaskFilters } from 'components/Task/TaskFilters';
+import { TaskSorting } from 'components/Task/TaskSorting';
+import { TaskCard } from 'components/Task/TaskCard';
+import TaskForm from 'components/Task/TaskForm';
+import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
 
 /**
  * The `TaskList` component is responsible for rendering the main task list view, including the task header, filters, sorting options, and the list of task cards.

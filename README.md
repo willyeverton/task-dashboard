@@ -84,3 +84,9 @@ src/
 ├── index.tsx   # Arquivo de entrada da aplicação
 └── styles/     # Arquivos de estilo globais
 ```
+
+implement in my project a page from Charts/graphs visualization e a page from list of tasks
+implement in my project More comprehensive filtering options
+implement in my project Automated tests (Jest and React Testing Library)
+implement in my project useMemo
+implement in my project Lazy loading
