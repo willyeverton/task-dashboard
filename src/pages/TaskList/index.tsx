@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Dialog, Grid } from '@mui/material';
+import { Box, Dialog, Grid, Button } from '@mui/material';
 import { useTaskListManager } from 'hooks/useTaskListManager';
 import { FilterSection } from './styles';
 import { TaskHeader } from 'components/Task/TaskHeader';
@@ -8,6 +8,7 @@ import { TaskSorting } from 'components/Task/TaskSorting';
 import { TaskCard } from 'components/Task/TaskCard';
 import TaskForm from 'components/Task/TaskForm';
 import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * The `TaskList` component is responsible for rendering the main task list view, including the task header, filters, sorting options, and the list of task cards.
@@ -15,6 +16,7 @@ import { DeleteConfirmDialog } from 'components/DeleteConfirmDialog';
  * @returns A React functional component that renders the task list view.
  */
 const TaskList: React.FC = () => {
+  const navigate = useNavigate();
 
   const {
     filteredTasks,
@@ -67,6 +69,16 @@ const TaskList: React.FC = () => {
           />
         ))}
       </Grid>
+
+      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 2 }}>
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={() => navigate('/chart')}
+        >
+          Chat
+        </Button>
+      </Box>
 
       <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
         <TaskForm editingTask={editingTask} onClose={() => setOpenDialog(false)} />

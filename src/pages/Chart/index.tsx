@@ -3,7 +3,10 @@ import { TaskChart } from 'components/Charts/TaskChart';
 import { useTaskContext } from 'context/TaskContext';
 import React from 'react';
 
-export const Chart = () => {
+/**
+ * The `Chart` component is a React functional component that renders a grid layout with a single `TaskChart` component. It retrieves the `tasks` data from the `useTaskContext` hook and passes it as a prop to the `TaskChart` component.
+ */
+const Chart: React.FC = () => {
   const { tasks } = useTaskContext();
 
   return (
@@ -14,3 +17,4 @@ export const Chart = () => {
     </Grid>
   );
 };
+export default Chart;
