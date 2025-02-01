@@ -17,11 +17,12 @@ jobs:
       uses: actions/setup-node@v2
       with:
         node-version: '22'
-    - name: Install dependencies
-      run: npm install
     - name: Run ci
       run: npm ci
-    - name: Run build
-      run: npm run build
     - name: Run tests
       run: npm run test
+    - name: Run build
+      run: npm run build
+    - name: Deploy no Vercel
+      run: |
+        vercel --token ${{ secrets.VERCEL_TOKEN }} --prod

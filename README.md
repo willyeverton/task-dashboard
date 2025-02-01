@@ -2,6 +2,8 @@
 
 Este é um painel de controle (dashboard) para monitoramento de tarefas em um projeto, desenvolvido como parte de um desafio técnico para uma vaga de Desenvolvedor Frontend.
 
+- Acesse a aplicação online aqui: **[https://task-dashboard-beige-theta.vercel.app/](https://task-dashboard-beige-theta.vercel.app/)**
+
 ## Funcionalidades
 
 - **Listagem de Tarefas**: Exibe uma lista de tarefas com as seguintes informações:
@@ -38,7 +40,7 @@ Siga as instruções abaixo para rodar o projeto em sua máquina localmente:
 ### 1. Clone o Repositório
 
 ```bash
-git clone https://github.com/SEU_USUARIO/task-dashboard.git
+git clone https://github.com/willyeverton/task-dashboard.git
 ```
 ### 2. Navegue até o diretório do projeto
 
@@ -71,16 +73,56 @@ npm test
 
   - **Verificação de funcionalidade:** Os testes verificam a renderização correta dos componentes, manipulação de eventos e integração com o estado global.
 
-## Estrutura do Projeto
+### Documentação: Integração Contínua e Testes Automatizados
+1. Integração Contínua (CI) com GitHub Actions
 
-O projeto segue a estrutura padrão de um aplicativo React com a divisão em componentes reutilizáveis e modularizados. Abaixo, a estrutura básica de diretórios:
+  A integração contínua (CI) tem como objetivo garantir que o código seja validado automaticamente sempre que houver um novo push, garantindo que os testes sejam executados e que o código esteja funcionando corretamente antes de ser integrado ao repositório principal.
+
+1.2 Configuração do Pipeline de CI
+
+Utilizamos o GitHub Actions para configurar o pipeline de integração contínua. O fluxo de trabalho executa os seguintes passos:
+
+  - Criação do arquivo de configuração: Criamos um arquivo de workflow no repositório, dentro do diretório .github/workflows/ci.yml, que define o processo de CI.
+
+  - Configuração do ambiente:
+      A pipeline é acionada sempre que um push é enviado para o repositório.
+      O ambiente é configurado com Node.js, garantindo que as dependências sejam instaladas e os testes sejam executados corretamente.
+
+1.3 Explicação dos Passos no Workflow
+
+    actions/checkout@v2: Faz o checkout do código-fonte do repositório.
+
+    actions/setup-node@v2: Configura a versão do Node.js.
+
+    npm ci: Usando para garantir que as dependências sejam instaladas de forma consistente.
+
+    npm run build: Executa o processo de build da aplicação.
+
+    npm test: Executa os testes unitários com Jest.
+
+    vercel --token ${{ secrets.VERCEL_TOKEN }} --prod: Realiza o deploy da aplicação na Vercel, utilizando o token de acesso armazenado nas secrets do GitHub.
+
+2. Testes Automatizados com Jest e React Testing Library
+
+Os testes automatizados têm como objetivo garantir que os componentes e funções essenciais da aplicação funcionem corretamente. Utilizamos o Jest como framework de testes e o React Testing Library para testar a renderização e a interação dos componentes.
+
+2.2. Configuração do Jest e React Testing Library
+
+  Instalação das dependências: As dependências para o Jest e React Testing Library foram instaladas com os seguintes comandos:
 
 ```bash
-src/
-│
-├── components/ # Componentes reutilizáveis (TaskForm, TaskList, etc.)
-├── context/    # Gerenciamento de estado (TaskContext)
-├── App.tsx     # Componente principal
-├── index.tsx   # Arquivo de entrada da aplicação
-└── styles/     # Arquivos de estilo globais
+npm install --save-dev jest @types/jest @testing-library/react @testing-library/jest-dom
 ```
+
+Configuração do Jest: A configuração do Jest foi feita dentro do arquivo tsconfig.json, garantindo que ele saiba como rodar os testes.
+
+Exemplo de configuração no tsconfig.json:
+
+```bash
+  "types": [
+      "jest",
+      "@testing-library/jest-dom"
+    ]
+```
+
+Testes com React Testing Library: O React Testing Library foi configurado para renderizar os componentes e interagir com a interface de maneira a simular a experiência do usuário. Utilizamos funções como render(), fireEvent(), e screen para testar a interação com os componentes.
