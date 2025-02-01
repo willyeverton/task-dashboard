@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useTaskContext } from '../context/TaskContext';
 import { dateFormatter } from 'utils/dateFormatter';
 
@@ -32,10 +32,28 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
     }
   }, [editingTask]);
 
+  // Validate the entire form
+  const validateForm = useCallback((): boolean => {
+    const newErrors: FormErrors = {};
+
+    Object.keys(task).forEach(key => {
+      const error = validateField(key, task[key as keyof Task]?.toString() || '');
+      if (error) {
+        newErrors[key as keyof FormErrors] = error;
+      }
+    });
+
+    const formIsValid = Object.keys(newErrors).length === 0;
+    setErrors(newErrors);
+    setIsValid(formIsValid);
+
+    return formIsValid;
+  }, [task]);
+
   // Validate form on task state change
   useEffect(() => {
     validateForm();
-  }, [task]);
+  }, [task, validateForm]);
 
   // Validate form on form submission
   const validateField = (name: string, value: string): string => {
@@ -62,24 +80,6 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
       default:
         return '';
     }
-  };
-
-  // Validate the entire form
-  const validateForm = (): boolean => {
-    const newErrors: FormErrors = {};
-
-    Object.keys(task).forEach(key => {
-      const error = validateField(key, task[key as keyof Task]?.toString() || '');
-      if (error) {
-        newErrors[key as keyof FormErrors] = error;
-      }
-    });
-
-    const formIsValid = Object.keys(newErrors).length === 0;
-    setErrors(newErrors);
-    setIsValid(formIsValid);
-
-    return formIsValid;
   };
 
   // Handle form changes
