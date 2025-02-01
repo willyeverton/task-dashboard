@@ -49,9 +49,7 @@ export class ErrorBoundary extends Component<Props, State> {
    * @param error - The error that occurred.
    * @param errorInfo - Additional information about the error.
    */
-  public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error('Error caught by boundary:', error, errorInfo);
-  }
+  public componentDidCatch(error: Error, errorInfo: ErrorInfo) { }
 
   /**
    * Resets the error state of the `ErrorBoundary` component, allowing the child components to be re-rendered.

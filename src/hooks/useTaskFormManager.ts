@@ -104,25 +104,21 @@ export const useTaskFormManager = (editingTask: Task | null | undefined, onClose
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      if (editingTask) {
-        editTask(task);
-      }
-      else {
-        const newTask = {
-          ...task,
-          id: Date.now().toString(),
-          createdAt: new Date(),
-        };
-        addTask(newTask);
-      }
-      setTask(initialTaskState);
+    if (editingTask) {
+      editTask(task);
+    }
+    else {
+      const newTask = {
+        ...task,
+        id: Date.now().toString(),
+        createdAt: new Date(),
+      };
+      addTask(newTask);
+    }
+    setTask(initialTaskState);
 
-      if (onClose) {
-        onClose();
-      }
-    } catch (error) {
-      console.error('Error submitting form:', error);
+    if (onClose) {
+      onClose();
     }
   };
 
