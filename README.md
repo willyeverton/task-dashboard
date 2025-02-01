@@ -96,11 +96,13 @@ Utilizamos o GitHub Actions para configurar o pipeline de integração contínua
 
     npm ci: Usando para garantir que as dependências sejam instaladas de forma consistente.
 
-    npm run build: Executa o processo de build da aplicação.
+    npm install --global vercel@latest: instala o vercel cli globalmente
 
     npm test: Executa os testes unitários com Jest.
 
-    vercel --token ${{ secrets.VERCEL_TOKEN }} --prod: Realiza o deploy da aplicação na Vercel, utilizando o token de acesso armazenado nas secrets do GitHub.
+    vercel build --token=${{ secrets.VERCEL_TOKEN }}: Executa o processo de build da aplicação.
+
+    vercel deploy --prebuilt --token ${{ secrets.VERCEL_TOKEN }}: Realiza o deploy da aplicação na Vercel, utilizando o token de acesso armazenado nas secrets do GitHub.
 
 2. Testes Automatizados com Jest e React Testing Library
 
