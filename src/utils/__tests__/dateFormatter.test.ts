@@ -6,7 +6,7 @@ describe('dateFormatter', () => {
   describe('toLocalDateTime', () => {
     it('formats date to local datetime string', () => {
       expect(dateFormatter.toLocalDateTime(testDate))
-        .toMatch(/01\/01\/2024.*10:00/);
+        .toMatch(/1\/1\/2024, 10:00:00 AM/);
     });
 
     it('handles invalid date input', () => {
