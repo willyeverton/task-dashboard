@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Dialog, Grid, Button } from '@mui/material';
+import { Box, Dialog } from '@mui/material';
 import { useTaskListManager } from 'hooks/useTaskListManager';
 import { FilterSection, TaskGrid } from './styles';
 import { TaskHeader } from 'components/Task/TaskHeader';

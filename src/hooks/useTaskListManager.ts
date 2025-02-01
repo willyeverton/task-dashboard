@@ -1,12 +1,11 @@
 import { useTaskContext } from "context/TaskContext";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 /**
  * The `useTaskListManager` hook is responsible for managing the state and functionality related to the task list in the application.
  * It provides various utilities for filtering, sorting, editing, and deleting tasks, as well as handling the state of the task list and related UI elements.
  *
  * The hook returns an object with the following properties and methods:
- * - `filteredTasks`: An array of tasks that have been filtered based on the current filter settings.
  * - `editingTask`: The task that is currently being edited, or `null` if no task is being edited.
  * - `openDialog`: A boolean indicating whether the task editing dialog is currently open.
  * - `filterStatus`: The current filter status, which can be used to filter tasks by their status.
@@ -26,8 +25,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
  * - `setOpenDeleteDialog`: A function that sets the `openDeleteDialog` state.
  */
 export const useTaskListManager = () => {
-  const { tasks, removeTask, filterTasks } = useTaskContext();
-  const [filteredTasks, setFilteredTasks] = useState<Task[]>(tasks);
+  const { removeTask, filterTasks } = useTaskContext();
   const [editingTask, setEditingTask] = useState<Task | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
   const [filterStatus, setFilterStatus] = useState<string>('');
@@ -56,7 +54,7 @@ export const useTaskListManager = () => {
   const filteredAndSortedTasks = useMemo(() => {
     const filtered = filterTasks(filterStatus, filterPriority);
     return handleSort(filtered);
-  }, [filterStatus, filterPriority, sortBy, sortOrder, tasks]);
+  }, [filterStatus, filterPriority, filterTasks, handleSort]);
 
   // Handle edit click
   const handleEdit = useCallback((task: Task) => {
