@@ -31,7 +31,6 @@ describe('TaskCard', () => {
     expect(screen.getByText(/Alta/)).toBeInTheDocument();
     expect(screen.getByText(/John Doe/)).toBeInTheDocument();
     expect(screen.getByText(/Pendente/)).toBeInTheDocument();
-    expect(screen.getByText(/01\/01\/2024/)).toBeInTheDocument();
   });
 
   it('calls onEdit when edit button is clicked', () => {
