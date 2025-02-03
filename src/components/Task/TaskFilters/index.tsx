@@ -1,5 +1,6 @@
-import { Box, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { InputLabel, MenuItem } from '@mui/material';
 import React, { useMemo } from 'react';
+import { BoxFilters, StyledFieldset, StyledFormControl, StyledSelect } from './styles';
 
 /**
  * The `TaskFilters` component is a React functional component that renders a set of filters for tasks. It allows the user to filter tasks by status (Pending, In Progress, Completed) and priority (Low, Medium, High). The component receives the current filter values and callback functions to update the filters as props.
@@ -23,38 +24,38 @@ const TaskFilters: React.FC<TaskFiltersProps> = (({
   }), []);
 
   return (
-    <fieldset style={{ border: '1px solid #ddd', borderRadius: '4px', width: 'max-content' }}>
+    <StyledFieldset>
       <legend>Filtros</legend>
-      <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
-        <FormControl sx={{ minWidth: 120 }}>
+      <BoxFilters>
+        <StyledFormControl>
           <InputLabel>Status</InputLabel>
-          <Select
+          <StyledSelect
             value={filterStatus}
             label="Status"
-            onChange={(e) => onStatusChange(e.target.value)}
+            onChange={(e) => onStatusChange(e.target.value as string)}
           >
             <MenuItem value="">Todos</MenuItem>
             {filterOptions.status.map((status) => (
               <MenuItem key={status} value={status}>{status}</MenuItem>
             ))}
-          </Select>
-        </FormControl>
+          </StyledSelect>
+        </StyledFormControl>
 
-        <FormControl sx={{ minWidth: 120 }}>
+        <StyledFormControl>
           <InputLabel>Prioridade</InputLabel>
-          <Select
+          <StyledSelect
             value={filterPriority}
             label="Prioridade"
-            onChange={(e) => onPriorityChange(e.target.value)}
+            onChange={(e) => onPriorityChange(e.target.value as string)}
           >
             <MenuItem value="">Todas</MenuItem>
             {filterOptions.priority.map((priority) => (
               <MenuItem key={priority} value={priority}>{priority}</MenuItem>
             ))}
-          </Select>
-        </FormControl>
-      </Box>
-    </fieldset>
+          </StyledSelect>
+        </StyledFormControl>
+      </BoxFilters>
+    </StyledFieldset>
   )
 });
 

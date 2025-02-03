@@ -1,5 +1,6 @@
-import { Box, Button, FormControl, InputLabel, MenuItem, Select } from '@mui/material';
+import { Button, InputLabel, MenuItem } from '@mui/material';
 import React from 'react';
+import { BoxSorting, StyledFormControl, StyledSelect } from './styles';
 
 /**
  * A React functional component that renders the task sorting options.
@@ -16,7 +17,7 @@ export const TaskSorting = React.memo<TaskSortingProps>(({
   onSortOrderChange
 }) => {
   return (
-    <Box sx={{ display: 'flex', alignItems: 'flex-start' }}>
+    <BoxSorting>
       <Button sx={{
         minWidth: 0, '& .MuiButton-startIcon': {
           margin: 0,
@@ -27,17 +28,17 @@ export const TaskSorting = React.memo<TaskSortingProps>(({
         startIcon={sortOrder === 'asc' ? '↑' : '↓'}
       >
       </Button>
-      <FormControl>
+      <StyledFormControl>
         <InputLabel>Ordenar por</InputLabel>
-        <Select
+        <StyledSelect
           value={sortBy}
           label="Ordenar por"
-          onChange={(e) => onSortByChange(e.target.value)}
+          onChange={(e) => onSortByChange(e.target.value as string)}
         >
           <MenuItem value="createdAt">Data de Criação</MenuItem>
           <MenuItem value="dueDate">Data de Vencimento</MenuItem>
-        </Select>
-      </FormControl>
-    </Box>
+        </StyledSelect>
+      </StyledFormControl>
+    </BoxSorting>
   )
 });

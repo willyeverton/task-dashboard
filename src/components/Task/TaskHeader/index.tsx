@@ -1,6 +1,7 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import React from 'react';
+import { BoxButtons, BoxHeader, StyledButton } from './styles';
 
 /**
  * A React functional component that renders the task header.
@@ -11,22 +12,22 @@ import React from 'react';
 export const TaskHeader: React.FC<TaskHeaderProps> = ({ onAddNew }) => {
   const navigate = useNavigate();
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
+    <BoxHeader>
       <Typography variant="h4" gutterBottom>
         Lista de Tarefas
       </Typography>
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        <Button
+      <BoxButtons>
+        <StyledButton
           variant="contained"
           color="secondary"
           onClick={() => navigate('/chart')}
         >
-          Chart
-        </Button>
-        <Button variant="contained" color="primary" onClick={onAddNew}>
+          Grafico
+        </StyledButton>
+        <StyledButton variant="contained" color="primary" onClick={onAddNew}>
           Nova Tarefa
-        </Button>
-      </Box>
-    </Box>
+        </StyledButton>
+      </BoxButtons>
+    </BoxHeader>
   )
 };

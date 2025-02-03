@@ -11,7 +11,7 @@ const Chart: React.FC = () => {
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={6}>
+      <Grid item xs={12}>
         <TaskChart tasks={tasks} />
       </Grid>
     </Grid>

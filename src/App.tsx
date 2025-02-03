@@ -18,18 +18,20 @@ const LoadingFallback = () => (
 
 function App() {
   return (
-    <ErrorBoundary>
-      <TaskProvider>
-        <BrowserRouter>
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
-              <Route path="/chart" element={<Chart />} />
-              <Route path="/" element={<TaskList />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </TaskProvider>
-    </ErrorBoundary>
+    <div className="app">
+      <ErrorBoundary>
+        <TaskProvider>
+          <BrowserRouter>
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
+                <Route path="/chart" element={<Chart />} />
+                <Route path="/" element={<TaskList />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </TaskProvider>
+      </ErrorBoundary>
+    </div>
   );
 }
 

@@ -4,16 +4,15 @@ import { Box } from '@mui/material';
 export const FilterSection = styled(Box)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'row',
-  alignItems: 'center',
+  alignItems: 'baseline',
   justifyContent: 'space-between',
   gap: theme.spacing(2),
   marginBottom: theme.spacing(2),
-  padding: theme.spacing(2),
 
   [theme.breakpoints.down('sm')]: {
+    width: '100%',
     flexDirection: 'column',
     alignItems: 'stretch',
-    padding: theme.spacing(1),
     gap: theme.spacing(2)
   }
 }));
